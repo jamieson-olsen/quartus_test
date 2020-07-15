@@ -1,5 +1,5 @@
-# build script for Altera Quartus Prime 15.1
-# Jamieson Olsen 13-April-2020
+# build script for Altera Quartus II or Intel Quartus Prime
+# Jamieson Olsen
 # to run it from command line: quartus_sh -t build.tcl
 
 load_package flow
@@ -23,6 +23,9 @@ set_location_assignment -to cout[2] PIN_43
 set_location_assignment -to cout[1] PIN_44
 set_location_assignment -to cout[0] PIN_45
 
+# a user-defined variable can be boolean or integer
+# quartus does not support any other types here
+set_parameter -name MyVar 12
 
 execute_flow -compile
 project_close

@@ -1,8 +1,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
  
-entity Test is
+entity test is
+generic( MyVar : integer := 17 ); -- this is passed in from the tcl build script
 port (
 	cout   :out std_logic_vector (7 downto 0); -- Output of the counter
     clock  :in  std_logic;                     -- Input clock
@@ -10,7 +11,7 @@ port (
 );
 end entity;
  
-architecture Test_Arch of Test is
+architecture test_arch of test is
 
 signal count_reg :std_logic_vector (7 downto 0);
 
@@ -19,13 +20,13 @@ begin
 process (clock) begin
 	if (rising_edge(clock)) then
 		if (reset = '1') then
-			count_reg <= (others=>'0');
+			count_reg <= std_logic_vector(to_unsigned(MyVar,count_reg'length));
 		else
-			count_reg <= count_reg + 1;
+			count_reg <= std_logic_vector(unsigned(count_reg) + 1);
         end if;
     end if;
  end process;
  
  cout <= count_reg;
  
- end architecture Test_Arch;
+ end architecture test_arch;
